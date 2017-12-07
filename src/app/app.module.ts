@@ -25,6 +25,8 @@ import { CharacterDetailComponent } from './components/characters/character-deta
 import { CharacterService } from './services/character.service';
 import { GameMoreDetailsComponent } from './components/games/game-more-details/game-more-details.component';
 
+import { GamedevelopersComponent } from './components/gamedevelopers/gamedevelopers.component';
+import { GamedeveloperEditComponent} from './components/gamedevelopers/gamedeveloper-edit/gamedeveloper-edit.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,9 @@ import { GameMoreDetailsComponent } from './components/games/game-more-details/g
     CharacterItemComponent,
     CharacterDetailComponent,
     CharacterEditComponent,
+//game developers components
+    GamedevelopersComponent,
+    GamedeveloperEditComponent,
 //directives
     DropdownDirective
   ],
