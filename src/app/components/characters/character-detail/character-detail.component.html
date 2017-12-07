@@ -1,0 +1,39 @@
+<div *ngIf="character" class="row">
+    <div  class="col-xs-12">
+      <img
+        [src]="character?.imagePath"
+        alt="{{ character?.name }}"
+        class="img-responsive"
+        style="
+        height: 300px;
+        width: 220px;
+        ">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{ character?.name }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <p>{{ character?.description }}</p>
+    </div>
+  </div>
+<div
+    class="btn-group"
+    appDropdown>
+    <button
+      type="button"
+      class="btn btn-primary dropdown-toggle">
+      Options <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a (click)="onEditCharacter()" style='cursor: pointer;' >Edit</a></li>
+      <li><a (click)="onDeleteCharacter()" style='cursor: pointer;' >Delete</a></li>
+    </ul>
+</div>
+
+<div *ngIf="!character">
+    Loading...
+</div>

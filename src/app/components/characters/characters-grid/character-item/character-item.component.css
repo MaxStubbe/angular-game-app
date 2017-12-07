@@ -1,0 +1,14 @@
+.grid-item {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+    width: auto;
+  }
+
+  .image-to-fit{
+    height: 200px; 
+    width: 140px;
+    background-size: contain!important;
+    background-repeat: no-repeat!important;
+    background-position: center center!important;
+  }

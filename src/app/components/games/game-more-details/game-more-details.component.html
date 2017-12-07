@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-xs-5">
+            <img
+            [src]="game?.imagePath"
+            alt="{{ game?.name }}"
+            class="img-responsive"
+            style="
+            height: 300px;
+            width: 220px;
+            ">
+    </div>
+    <div class="col-xs-7">
+            <h1>{{ game?.name }}</h1>
+            <p>{{ game?.description }}</p>
+    </div>
+    <hr>
+    <button class="btn btn-danger" (click)="onDeleteGame()">Delete</button>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <app-characters
+        *ngIf="Loaded"
+        [game]="game"
+        ></app-characters>
+    </div>
+</div>

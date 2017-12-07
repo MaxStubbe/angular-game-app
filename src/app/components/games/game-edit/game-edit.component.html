@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-xs-12">
+      <form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-success" [disabled]="!gameForm.valid">Save</button>
+            <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" formControlName="name" class="form-control" 
+              ngModel={{currentgame?.name}}
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="imagePath">Image URL</label>
+              <input type="text" id="imagePath" formControlName="imagePath" class="form-control" #imagePath
+              ngModel={{currentgame?.imagePath}}
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <img [src]="imagePath.value" class="img-responsive" style="max-height: 300px">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text" id="description" class="form-control" formControlName="description" rows="6"
+              ngModel={{currentgame?.description}}
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

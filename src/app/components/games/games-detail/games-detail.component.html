@@ -1,0 +1,40 @@
+<div *ngIf="game" class="row">
+    <div  class="col-xs-12">
+      <img
+        [src]="game?.imagePath"
+        alt="{{ game?.name }}"
+        class="img-responsive"
+        style="
+        height: 300px;
+        width: 220px;
+        ">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{ game?.name }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      {{ game?.description }}
+    </div>
+  </div>
+<div
+    class="btn-group"
+    appDropdown>
+    <button
+      type="button"
+      class="btn btn-primary dropdown-toggle">
+      Options <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a (click)="onShowDetails()" style='cursor: pointer;'>Show Details</a></li>
+      <li><a (click)="onEditGame()" style='cursor: pointer;' >Edit</a></li>
+      <li><a (click)="onDeleteGame()" style='cursor: pointer;' >Delete</a></li>
+    </ul>
+</div>
+
+<div *ngIf="!game">
+    Loading...
+</div>
