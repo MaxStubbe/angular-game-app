@@ -25,21 +25,30 @@ export class CharacterDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.game = this.gameservice.currentGame;
+
     this.route.params
-      .subscribe(
-        (params: Params) => {
-          //lees de parameters in de url
-          this.id = +params['cid'];
-          this.gameservice.getGameCharacters(this.game._id)
+    .subscribe(
+      (params: Params) => {
+        //lees de parameters in de url
+        this.id = +params['cid'];
+        
+    if(this.game){
+      this.game = this.gameservice.currentGame;
+            this.gameservice.getGameCharacters(this.game._id)
+            .then((characters) => {
+              this.character = characters[this.id];
+            })
+            .catch(error => console.log(error));
+    }else{
+      
+          this.characterservice.getCharacters()
           .then((characters) => {
             this.character = characters[this.id];
-            console.log( "description : " + this.character.description)
           })
           .catch(error => console.log(error));
         }
-      );
-  }
+      });
+    }
 
   onEditCharacter(){
     this.router.navigate(['edit'],{relativeTo: this.route})

@@ -7,17 +7,16 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { Game } from '../models/game.model';
-import { Character } from '../models/character.model';
-import { CharactersComponent } from '../components/characters/characters.component';
+import { Developer } from '../models/developer.model';
 
 @Injectable()
-export class CharacterService {
+export class DeveloperService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private serverUrl = environment.serverUrl + '/characters'; // URL to web api
-  private characters: Character[] = [];
+  private serverUrl = environment.serverUrl + '/developers'; // URL to web api
+  private developers: Developer[] = [];
 
-  charactersChanged = new Subject<Character[]>();
+  developersChanged = new Subject<Developer[]>();
 
   //
   //
@@ -27,57 +26,57 @@ export class CharacterService {
   //
   //
   //
-  public getCharacters(): Promise<Character[]> {
+  public getDevelopers(): Promise<Developer[]> {
     console.log('items ophalen van server');
     return this.http.get(this.serverUrl, { headers: this.headers })
       .toPromise()
       .then(response => {
         console.dir(response.json());
-        this.characters = response.json() as Character[];
-        return this.characters;
+        this.developers = response.json() as Developer[];
+        return this.developers;
       })
       .catch(error => {
         return this.handleError(error);
       });
   }
 
-  public getCharacter(index: number):Promise<Character> {
-      console.log('character ophalen met id');
-      return this.http.get(this.serverUrl + '/' + this.characters[index]._id, { headers: this.headers })
+  public getDeveloper(index: number):Promise<Developer> {
+      console.log('Developer ophalen met id');
+      return this.http.get(this.serverUrl + '/' + this.developers[index]._id, { headers: this.headers })
         .toPromise()
         .then(response => {
             console.dir(response.json());
-            return response.json() as Character;
+            return response.json() as Developer;
         })
         .catch( error => {
             return this.handleError(error);
         });
   }
 
-  public getCharacterbyId(_id: String):Promise<Character> {
-    console.log('character ophalen met id');
+  public getDeveloperbyId(_id: String):Promise<Developer> {
+    console.log('Developer ophalen met id');
     return this.http.get(this.serverUrl + '/' + _id, { headers: this.headers })
       .toPromise()
       .then(response => {
           console.dir(response.json());
-          return response.json() as Character;
+          return response.json() as Developer;
       })
       .catch( error => {
           return this.handleError(error);
       });
 }
 
-  public addCharacter(character: Character, gameid: String ) {
-    console.log('character toevoegen en opslaan');
-    this.http.post(this.serverUrl, { name: character.name, description: character.description, imagePath: character.imagePath, gameid: gameid })
+  public addDeveloper(Developer: Developer, gameid: String ) {
+    console.log('Developer toevoegen en opslaan');
+    this.http.post(this.serverUrl, { name: Developer.name, imagePath: Developer.imagePath, gameid: gameid })
       .toPromise()
       .then( () =>{
-        console.log("character toegevoegd")
-        this.getCharacters()
+        console.log("Developer toegevoegd")
+        this.getDevelopers()
         .then(
-          characters => {
-            this.characters = characters
-            this.charactersChanged.next(this.characters.slice());
+          developers => {
+            this.developers = developers
+            this.developersChanged.next(this.developers.slice());
           }
         )
         .catch(error => console.log(error));
@@ -88,18 +87,18 @@ export class CharacterService {
       
   }
 
-  public updateCharacter(_id: string, newCharacter : Character){
+  public updateDeveloper(_id: string, newDeveloper : Developer){
     console.log("game updaten");
     
-    this.http.put(this.serverUrl + "/" + _id, { name: newCharacter.name, description: newCharacter.description, imagePath: newCharacter.imagePath})
+    this.http.put(this.serverUrl + "/" + _id, { name: newDeveloper.name, imagePath: newDeveloper.imagePath})
       .toPromise()
       .then( () => {
         console.log("game veranderd")
-        this.getCharacters()
+        this.getDevelopers()
         .then(
           games => {
-            this.characters = games
-            this.charactersChanged.next(this.characters.slice());
+            this.developers = games
+            this.developersChanged.next(this.developers.slice());
           }
         )
         .catch(error => console.log(error));
@@ -107,18 +106,18 @@ export class CharacterService {
       .catch( error => { return this.handleError(error) } );
   }
 
-  public deleteCharacter(_id: string){
-    console.log("character deleten");
+  public deleteDeveloper(_id: string){
+    console.log("Developer deleten");
     
     this.http.delete(this.serverUrl + "/" + _id)
       .toPromise()
       .then( () => {
-        console.log("recipe verwijderd")
-        this.getCharacters()
+    	console.log("developer verwijderd")
+        this.getDevelopers()
         .then(
-          characters => {
-            this.characters = characters
-            this.charactersChanged.next(this.characters.slice());
+          developers => {
+            this.developers = developers
+            this.developersChanged.next(this.developers.slice());
           }
         )
         .catch(error => console.log(error));

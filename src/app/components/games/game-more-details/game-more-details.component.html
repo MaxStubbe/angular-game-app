@@ -13,15 +13,26 @@
             <h1>{{ game?.name }}</h1>
             <p>{{ game?.description }}</p>
     </div>
+    <h2>Genres : </h2>
+    <div *ngFor="let genre of game?.genres">
+        {{genre}}
+    </div>
     <hr>
     <button class="btn btn-danger" (click)="onDeleteGame()">Delete</button>
 </div>
 <hr>
-<div class="row">
-    <div class="col-xs-12">
-        <app-characters
-        *ngIf="Loaded"
-        [game]="game"
-        ></app-characters>
-    </div>
+<div *ngIf="Loaded" class="row">
+        <div class="col-md-7">
+            
+           
+            <app-characters-grid
+            [game]="game"
+            ></app-characters-grid>
+            <hr>
+            <app-developers-grid
+            [game]="game"></app-developers-grid>
+        </div>
+            <div class="col-md-5">
+                <router-outlet> </router-outlet>
+            </div>
 </div>

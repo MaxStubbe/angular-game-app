@@ -24,9 +24,13 @@ import { CharacterEditComponent } from './components/characters/character-edit/c
 import { CharacterDetailComponent } from './components/characters/character-detail/character-detail.component';
 import { CharacterService } from './services/character.service';
 import { GameMoreDetailsComponent } from './components/games/game-more-details/game-more-details.component';
+import { DevelopersComponent } from './components/developers/developers.component';
+import { DevelopersGridComponent } from './components/developers/developers-grid/developers-grid.component';
+import { DeveloperItemComponent } from './components/developers/developers-grid/developer-item/developer-item.component';
+import { DeveloperNewComponent } from './components/developers/developer-new/developer-new.component';
+import { DeveloperService } from './services/developer.service';
 
-import { GamedevelopersComponent } from './components/gamedevelopers/gamedevelopers.component';
-import { GamedeveloperEditComponent} from './components/gamedevelopers/gamedeveloper-edit/gamedeveloper-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -47,8 +51,10 @@ import { GamedeveloperEditComponent} from './components/gamedevelopers/gamedevel
     CharacterDetailComponent,
     CharacterEditComponent,
 //game developers components
-    GamedevelopersComponent,
-    GamedeveloperEditComponent,
+   DevelopersComponent,
+   DevelopersGridComponent,
+   DeveloperItemComponent,
+   DeveloperNewComponent,
 //directives
     DropdownDirective
   ],
@@ -61,7 +67,8 @@ import { GamedeveloperEditComponent} from './components/gamedevelopers/gamedevel
   ],
   providers: [ 
     GameService, 
-    CharacterService
+    CharacterService,
+    DeveloperService
   ],
   bootstrap: [AppComponent]
 })

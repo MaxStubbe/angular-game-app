@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Game } from '../models/game.model';
 import { Character } from '../models/character.model';
+import { Developer } from '../models/developer.model';
 import { EventEmitter } from '@angular/core';
 
 @Injectable()
@@ -17,13 +18,16 @@ export class GameService {
   private serverUrl = environment.serverUrl + '/games'; // URL to web api
   private games: Game[] = [];
   private CurrentGameCharacters : Character[] = [];
+  private CurrentGameDevelopers : Developer[] = [];
 
   gamesChanged = new Subject<Game[]>();
 
   currentGame: Game;
 
   changeGame(game:Game){
-    console.log("aangeroepen met " + game.name)
+    if(game){
+      console.log("aangeroepen met " + game.name)
+    }
     this.currentGame = game ;
   }
 
@@ -88,9 +92,35 @@ export class GameService {
     });
   }
 
+  public getGameDevelopers(_id: String):Promise<Developer[]> {
+    console.log('game ophalen met id en developers terug geven');
+    return this.http.get(this.serverUrl + '/' + _id + "/developers", { headers: this.headers })
+      .toPromise()
+      .then(response => {
+          console.dir(response.json());
+          this.CurrentGameDevelopers = response.json() as Developer[];
+          return this.CurrentGameDevelopers;
+      })
+      .catch( error => {
+          return this.handleError(error);
+      });
+}
+
+  public getGameDeveloper(gameindex: number, developerindex: number):Promise<Developer>{
+    return this.http.get(this.serverUrl + '/' + this.games[gameindex]._id + "/developers/" + this.CurrentGameDevelopers[developerindex]._id, { headers: this.headers })
+    .toPromise()
+    .then(response => {
+        console.dir(response.json());
+        return  response.json() as Developer;
+    })
+    .catch( error => {
+        return this.handleError(error);
+    });
+  }
+
   public addGame(game: Game) {
     console.log('game toevoegen en opslaan');
-    this.http.post(this.serverUrl, { name: game.name, description: game.description, imagePath: game.imagePath })
+    this.http.post(this.serverUrl, { name: game.name, description: game.description, imagePath: game.imagePath, genres: game.genres })
       .toPromise()
       .then( () =>{
         console.log("game toegevoegd")
@@ -112,7 +142,7 @@ export class GameService {
   public updateGame(index: number, newGame : Game){
     console.log("game updaten");
     
-    this.http.put(this.serverUrl + "/" + this.games[index]._id, { name: newGame.name, description: newGame.description, imagePath: newGame.imagePath})
+    this.http.put(this.serverUrl + "/" + this.games[index]._id, { name: newGame.name, description: newGame.description, imagePath: newGame.imagePath, genres: newGame.genres})
       .toPromise()
       .then( () => {
         console.log("game veranderd")

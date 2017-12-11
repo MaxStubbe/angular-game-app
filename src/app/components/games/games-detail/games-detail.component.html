@@ -20,6 +20,10 @@
       {{ game?.description }}
     </div>
   </div>
+  <h4>Genres : </h4>
+  <div *ngFor="let genre of game?.genres">
+      {{genre}}
+  </div>
 <div
     class="btn-group"
     appDropdown>

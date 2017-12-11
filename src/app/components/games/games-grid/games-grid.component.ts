@@ -33,7 +33,7 @@ export class GamesGridComponent implements OnInit, OnDestroy {
   }
 
   onNewGame(){
-    this.router.navigate(['new'], { relativeTo: this.route });
+    this.router.navigate(['newGame'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

@@ -42,6 +42,14 @@
             </div>
           </div>
         </div>
+        <div >
+          <ul>
+            <li *ngFor="let genre of genres">
+              <label><input type='checkbox' 
+              ng-checked="genre.checkedGenres.indexOf(genre) != -1" (click)="toggleCheck(genre)">{{genre}}</label>
+            </li>
+          </ul>
+        </div>
       </form>
     </div>
   </div>

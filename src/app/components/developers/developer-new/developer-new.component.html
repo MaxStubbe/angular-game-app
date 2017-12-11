@@ -1,21 +1,20 @@
 <div class="row">
     <div class="col-xs-12">
-      <form [formGroup]="characterForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="developerForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="col-xs-12">
-            <button type="submit" class="btn btn-success" [disabled]="!characterForm.valid">Save</button>
+            <button type="submit" class="btn btn-success" [disabled]="!developerForm.valid">Save</button>
             <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
           </div>
         </div>
         <div>
-          <h1>Character Form</h1>
+            <h1>Developer Form</h1>
         </div>
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" id="name" formControlName="name" class="form-control" 
-              ngModel={{currentcharacter?.name}}
+              <input type="text" id="name" formControlName="name" class="form-control"
               >
             </div>
           </div>
@@ -25,7 +24,6 @@
             <div class="form-group">
               <label for="imagePath">Image URL</label>
               <input type="text" id="imagePath" formControlName="imagePath" class="form-control" #imagePath
-              ngModel={{currentcharacter?.imagePath}}
               >
             </div>
           </div>
@@ -33,16 +31,6 @@
         <div class="row">
           <div class="col-xs-12">
             <img [src]="imagePath.value" class="img-responsive" style="max-height: 300px">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea type="text" id="description" class="form-control" formControlName="description" rows="6"
-              ngModel={{currentcharacter?.description}}
-              ></textarea>
-            </div>
           </div>
         </div>
       </form>

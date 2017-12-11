@@ -1,0 +1,12 @@
+<div *ngIf="game" class="row">
+    <div class="col-xs-12">
+      <button (click)="onNewDeveloper()" class="btn btn-succes">Add Developer</button>
+    </div>
+</div>
+  <hr>
+<div class="grid-container">
+    <app-developer-item
+    *ngFor="let developersEl of developers; let i = index"
+    [developer]="developersEl"
+    [index]="i"></app-developer-item>
+</div>

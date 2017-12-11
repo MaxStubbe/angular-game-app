@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Game } from '../../../models/game.model';
@@ -31,6 +31,8 @@ export class GameMoreDetailsComponent implements OnInit {
             {
               this.game = game;
               this.Loaded = true;
+              this.gameService.changeGame(game);
+              console.log("dit is de game more details: " + this.gameService.currentGame.name);
             }            
           )
           .catch(error => console.log(error));

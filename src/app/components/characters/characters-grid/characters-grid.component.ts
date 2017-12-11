@@ -27,16 +27,19 @@ export class CharactersGridComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.gameService.getGameCharacters(this.game._id)
-    .then(characters => this.characters = characters)
-    .catch(error => console.log(error));
-    console.log("grid component " + this.game.name)
+    if(this.game){
+      this.gameService.getGameCharacters(this.game._id)
+      .then(characters => this.characters = characters)
+      .catch(error => console.log(error));
+      console.log("grid component " + this.game.name)
+    }else{
+      this.characterService.getCharacters()
+      .then(characters => this.characters = characters)
+      .catch(error => console.log(error))
+    }
   }
 
   onNewCharacter(){
-    this.router.navigate(['new'], { relativeTo: this.route });
-  }
-
-  ngOnDestroy() {
+    this.router.navigate(['newCharacter'], { relativeTo: this.route });
   }
 }

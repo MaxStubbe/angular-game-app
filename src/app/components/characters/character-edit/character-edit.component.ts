@@ -31,26 +31,38 @@ export class CharacterEditComponent implements OnInit{
     private router: Router) {}
 
   ngOnInit() {
-    this.game = this.gameService.currentGame;
-    console.log("gevonden denk ik " + this.game.name)
-      this.route.params
-      .subscribe(
-        (params: Params) => {
-            this.id = +params['cid'];  //pak de character id
-            console.log("dit is de character id" + this.id);
-            this.editMode = params['cid'] != null; //als de character id in de url bestaat is het een edit
-            
+  this.game = this.gameService.currentGame;
+    this.route.params
+    .subscribe(
+      (params: Params) => {
+          this.id = +params['cid'];  //pak de character id
+          console.log("dit is de character id" + this.id);
+          this.editMode = params['cid'] != null; //als de character id in de url bestaat is het een edit
 
-              if(this.editMode){
-                this.gameService.getGameCharacters(this.game._id)
-                .then((characters) => {
-                  this.currentcharacter = characters[this.id];
-                  this.initForm();
-                })
-                .catch(error => console.log(error));
-              }else{
+          if(this.game){
+            if(this.editMode){
+              this.gameService.getGameCharacters(this.game._id)
+              .then((characters) => {
+                this.currentcharacter = characters[this.id];
                 this.initForm();
-              }
+              })
+              .catch(error => console.log(error));
+            }else{
+            this.initForm();
+            }
+          }else{
+            if(this.editMode){
+              this.characterService.getCharacters()
+              .then(characters => {
+                this.currentcharacter = characters[this.id];
+                this.initForm();
+              })
+              .catch(error => console.log(error));
+            }else{
+              this.initForm();
+            }
+          }
+            
           }
       );
   }
@@ -74,7 +86,7 @@ export class CharacterEditComponent implements OnInit{
 
   onCancel() {
     //ga terug naar de vorige route
-    this.router.navigate(["../../"], {relativeTo: this.route});
+    this.router.navigate(["../details"], {relativeTo: this.route});
   }
 
   private initForm() {

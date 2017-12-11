@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { GameService } from '../../../services/game.service';
 import { Game } from '../../../models/game.model';
+import { FormControlName } from '@angular/forms/src/directives/reactive_directives/form_control_name';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class GameEditComponent implements OnInit {
   editMode = false;
   gameForm: FormGroup;
   currentgame: Game;
+  genres = ["Action", "Shooter", "RPG", "Racing"];
+  checkedGenres = [];
 
   constructor(private route: ActivatedRoute,
               private gameService: GameService,
@@ -38,6 +41,14 @@ export class GameEditComponent implements OnInit {
     }
   }
 
+  toggleCheck = function (genre) {
+    if (this.checkedGenres.indexOf(genre) === -1) {
+        this.checkedGenres.push(genre);
+    } else {
+        this.checkedGenres.splice(this.checkedGenres.indexOf(genre), 1);
+    }
+  };
+
   onSubmit() {
     if (this.editMode) {
       this.gameService.updateGame(this.id, this.gameForm.value);
@@ -55,6 +66,7 @@ export class GameEditComponent implements OnInit {
     let gameName = '';
     let gameImagePath = '';
     let gameDescription = '';
+    let gameGenres = [];
     let currentgame;
 
     if (this.editMode) {
@@ -64,7 +76,7 @@ export class GameEditComponent implements OnInit {
         currentgame = game;
         gameName = currentgame.name;
         gameImagePath = currentgame.imagePath;
-        gameDescription = currentgame.description;
+        gameDescription = currentgame.description
         }
       )
       .catch(error => console.log(error));
@@ -74,7 +86,8 @@ export class GameEditComponent implements OnInit {
     this.gameForm = new FormGroup({
       'name': new FormControl(gameName, Validators.required),
       'imagePath': new FormControl(gameImagePath, Validators.required),
-      'description': new FormControl(gameDescription, Validators.required)
+      'description': new FormControl(gameDescription, Validators.required),
+      'genres': new FormControl(this.checkedGenres)
     });
   }
 }
