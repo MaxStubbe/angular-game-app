@@ -11,6 +11,7 @@ import { GameService } from '../../services/game.service';
   styleUrls: ['./characters.component.css']
 })
 export class CharactersComponent implements OnInit {
+  game : Game = null
 
   constructor(private gameService: GameService) {}
 
