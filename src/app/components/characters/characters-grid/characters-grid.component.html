@@ -4,7 +4,7 @@
     </div>
 </div>
   <hr>
-<div class="grid-container">
+<div *ngIf="Loaded" class="grid-container">
     <app-character-item
     *ngFor="let charactersEl of characters; let i = index"
     [character]="charactersEl"

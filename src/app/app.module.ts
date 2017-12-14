@@ -29,6 +29,7 @@ import { DevelopersGridComponent } from './components/developers/developers-grid
 import { DeveloperItemComponent } from './components/developers/developers-grid/developer-item/developer-item.component';
 import { DeveloperNewComponent } from './components/developers/developer-new/developer-new.component';
 import { DeveloperService } from './services/developer.service';
+import { GenreService } from './services/genre.service';
 
 
 
@@ -68,7 +69,8 @@ import { DeveloperService } from './services/developer.service';
   providers: [ 
     GameService, 
     CharacterService,
-    DeveloperService
+    DeveloperService,
+    GenreService
   ],
   bootstrap: [AppComponent]
 })

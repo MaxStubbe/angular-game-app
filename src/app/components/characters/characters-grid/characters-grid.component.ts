@@ -19,6 +19,7 @@ export class CharactersGridComponent implements OnInit {
   @Input() game: Game;
   characters: Character[];
   subscription : Subscription;
+  Loaded : boolean = false;
   
     constructor(private route: ActivatedRoute,
                 private gameService: GameService,
@@ -28,13 +29,21 @@ export class CharactersGridComponent implements OnInit {
 
   ngOnInit() {
     if(this.game){
+      console.log("er is wel een game")
       this.gameService.getGameCharacters(this.game._id)
-      .then(characters => this.characters = characters)
+      .then(characters => {
+        this.characters = characters
+        this.Loaded = true
+      }
+    )
       .catch(error => console.log(error));
       console.log("grid component " + this.game.name)
     }else{
       this.characterService.getCharacters()
-      .then(characters => this.characters = characters)
+      .then(characters => {
+        this.characters = characters
+        this.Loaded = true
+      })
       .catch(error => console.log(error))
     }
   }

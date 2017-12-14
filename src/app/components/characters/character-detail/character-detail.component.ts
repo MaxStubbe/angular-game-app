@@ -32,8 +32,9 @@ export class CharacterDetailComponent implements OnInit {
         //lees de parameters in de url
         this.id = +params['cid'];
         
-    if(this.game){
+    if(this.gameservice.currentGame != null){
       this.game = this.gameservice.currentGame;
+      console.log("character detail component " +this.game.name)
             this.gameservice.getGameCharacters(this.game._id)
             .then((characters) => {
               this.character = characters[this.id];

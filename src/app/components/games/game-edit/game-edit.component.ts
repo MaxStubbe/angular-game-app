@@ -17,7 +17,7 @@ export class GameEditComponent implements OnInit {
   editMode = false;
   gameForm: FormGroup;
   currentgame: Game;
-  genres = ["Action", "Shooter", "RPG", "Racing"];
+  genres = ["Action", "Shooter", "RPG", "Racing", "Adventure", "Platform","Fighting","Strategy" ];
   checkedGenres = [];
 
   constructor(private route: ActivatedRoute,

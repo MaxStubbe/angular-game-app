@@ -5,5 +5,6 @@
 
 export const environment = {
   production: true,
-  serverUrl: 'https://maxstubbe.herokuapp.com/api/v1'
+  serverUrl: 'https://maxstubbe.herokuapp.com/api/v1',
+  neo4jUrl: ''
 };

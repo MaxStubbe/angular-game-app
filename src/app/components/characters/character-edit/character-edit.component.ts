@@ -86,7 +86,12 @@ export class CharacterEditComponent implements OnInit{
 
   onCancel() {
     //ga terug naar de vorige route
-    this.router.navigate(["../details"], {relativeTo: this.route});
+    if(this.game){
+      this.router.navigate(["../../../details"], {relativeTo: this.route});
+    }else{
+      this.router.navigate(["../../"], {relativeTo: this.route});
+    }
+    
   }
 
   private initForm() {

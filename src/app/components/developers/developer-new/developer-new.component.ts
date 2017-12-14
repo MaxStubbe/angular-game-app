@@ -38,7 +38,7 @@ export class DeveloperNewComponent implements OnInit {
 
   onCancel() {
     //ga terug naar de vorige route
-    this.router.navigate(["../details"], {relativeTo: this.route});
+    this.router.navigate(["../../../details"], {relativeTo: this.route});
   }
 
   private initForm() {

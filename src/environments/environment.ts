@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:3000/api/v1'
+  serverUrl: 'http://localhost:3000/api/v1',
+  neo4jUrl: 'http://localhost:7474/db/data/cypher'
 };

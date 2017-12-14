@@ -10,14 +10,21 @@
             ">
     </div>
     <div class="col-xs-7">
-            <h1>{{ game?.name }}</h1>
-            <p>{{ game?.description }}</p>
+                <h1>{{ game?.name }}</h1>
+                <p>{{ game?.description }}</p>
+        
+        <h2>Genres : </h2>
+        <div *ngFor="let genre of game?.genres">
+            <p>{{genre}}</p>
+        </div>
+        <hr>
+
+        <h2>Games you would like : </h2>
+        <div *ngFor="let suggestion of suggestions">
+            <p>{{suggestion}}</p>
+        </div>
+        <hr>
     </div>
-    <h2>Genres : </h2>
-    <div *ngFor="let genre of game?.genres">
-        {{genre}}
-    </div>
-    <hr>
     <button class="btn btn-danger" (click)="onDeleteGame()">Delete</button>
 </div>
 <hr>

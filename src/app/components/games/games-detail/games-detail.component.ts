@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { GameService } from '../../../services/game.service';
 import { Game } from '../../../models/game.model';
+import { GenreService } from '../../../services/genre.service';
 
 @Component({
   selector: 'app-games-detail',
@@ -16,6 +17,7 @@ export class GamesDetailComponent implements OnInit {
 
   constructor(
     private gameservice: GameService,
+    private genreService: GenreService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -26,10 +28,14 @@ export class GamesDetailComponent implements OnInit {
       (params: Params) => {
         this.id = +params['id'];
         this.gameservice.getGame(this.id)
-          .then(game => this.game = game)
+          .then((game) => 
+          {
+            this.game = game
+          })
           .catch(error => console.log(error));
       }
     );
+    
   }
 
   onShowDetails(){

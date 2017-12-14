@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url(http://media.indiedb.com/images/articles/1/185/184386/bg.jpg);
+}
+
+h1,h2,h3,h4,h5,h6 { 
+    color: #FFAA00
+}
+
+p,li,label{
+    color: #ffffff
+}

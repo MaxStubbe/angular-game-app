@@ -17,5 +17,6 @@ export class CharactersComponent implements OnInit {
 
   ngOnInit() {
       this.gameService.changeGame(null);
+      console.log("hallo ?")
   }
 }

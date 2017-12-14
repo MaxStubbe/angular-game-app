@@ -10,12 +10,14 @@ import { Game } from '../models/game.model';
 import { Character } from '../models/character.model';
 import { Developer } from '../models/developer.model';
 import { EventEmitter } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class GameService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private serverUrl = environment.serverUrl + '/games'; // URL to web api
+  private neo4jUrl = environment.neo4jUrl;
   private games: Game[] = [];
   private CurrentGameCharacters : Character[] = [];
   private CurrentGameDevelopers : Developer[] = [];
@@ -123,7 +125,7 @@ export class GameService {
     this.http.post(this.serverUrl, { name: game.name, description: game.description, imagePath: game.imagePath, genres: game.genres })
       .toPromise()
       .then( () =>{
-        console.log("game toegevoegd")
+        console.log("game toegevoegd aan mongodb")
         this.getGames()
         .then(
           games => {
@@ -136,12 +138,42 @@ export class GameService {
       )
       .catch( error => { return this.handleError(error) } );
       
+        //voeg eerst de game toe als hij niet bestaat
+        this.http.post(this.neo4jUrl, 
+          {
+            "query" : 
+            "MERGE (game:Game{ name:'" + game.name + "'}) "
+          })
+          .toPromise()
+          .then(() => {
+            //voor elke genre in de array van de game 
+            //voer een post uit die eerst de game vind en dan de relatie maakt
+            for(let genre of game.genres){
+              this.http.post(this.neo4jUrl,
+                {
+                  "query" : 
+                  "MATCH (game:Game{ name:'" + game.name + "'}) " + 
+                  "MATCH (genre:Genre{ genre:'" + genre + "'}) " + 
+                  "MERGE (game)-[:HAS_GENRE]->(genre)"
+                })
+                .toPromise()
+                .then(() => { 
+                  console.log(game.name + " met genre " + genre + " toegevoegd aan neo4j db")
+                })
+                .catch(error => console.log(error))
+           
+            }
+          })
+          .catch(error => console.log(error));
+      
+
+      
       
   }
 
   public updateGame(index: number, newGame : Game){
     console.log("game updaten");
-    
+    var editedGame = this.games[index]._id;
     this.http.put(this.serverUrl + "/" + this.games[index]._id, { name: newGame.name, description: newGame.description, imagePath: newGame.imagePath, genres: newGame.genres})
       .toPromise()
       .then( () => {
@@ -156,15 +188,41 @@ export class GameService {
         .catch(error => console.log(error));
     })
       .catch( error => { return this.handleError(error) } );
+
+    this.http.post(this.neo4jUrl,{
+      "query" : 
+      "OPTIONAL MATCH(game{ name:'" + editedGame.name + "'}) " + 
+      "DETACH DELETE (game) " +
+      "MERGE (newGame:Game{ name:'" + newGame.name + "'}) "
+    })
+    .toPromise()
+    .then(() => {
+      for(let genre of newGame.genres){
+        this.http.post(this.neo4jUrl,
+          {
+            "query" : 
+            "MATCH (game:Game{ name:'" + newGame.name + "'}) " + 
+            "MATCH (genre:Genre{ genre:'" + genre + "'}) " + 
+            "MERGE (game)-[:HAS_GENRE]->(genre)"
+          })
+          .toPromise()
+          .then(() => { 
+            console.log(newGame.name + " met genre " + genre + " veranderd aan neo4j db")
+          })
+          .catch(error => console.log(error))
+     
+      }
+    })
+    .catch(error => console.log(error));
   }
 
   public deleteGame(index: number){
     console.log("game deleten");
-    
+    var deletedGame = this.games[index]._id;
     this.http.delete(this.serverUrl + "/" + this.games[index]._id)
       .toPromise()
       .then( () => {
-        console.log("recipe verwijderd")
+        console.log("game verwijderd")
         this.getGames()
         .then(
           games => {
@@ -175,6 +233,15 @@ export class GameService {
         .catch(error => console.log(error));
     })
       .catch( error => { return this.handleError(error) } );
+
+      this.http.post(this.neo4jUrl,{
+        "query" : 
+        "MATCH(game{ name:'" + deletedGame.name + "'}) " + 
+        "DETACH DELETE (game) "
+      })
+      .toPromise()
+      .then(() => {})
+      .catch(error => console.log(error))
   }
 
   //
