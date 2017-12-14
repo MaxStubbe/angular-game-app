@@ -6,5 +6,5 @@
 export const environment = {
   production: true,
   serverUrl: 'https://maxstubbe.herokuapp.com/api/v1',
-  neo4jUrl: ''
+  neo4jUrl: 'http://localhost:7474/db/data/cypher'
 };
